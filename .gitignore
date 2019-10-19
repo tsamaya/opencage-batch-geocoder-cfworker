@@ -9,5 +9,6 @@ node_modules/
 .cargo-ok
 # dotenv environment variables file
 .env
+env.js
 # distribution folder
 dist/
