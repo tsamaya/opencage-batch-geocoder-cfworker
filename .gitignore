@@ -7,3 +7,7 @@ wasm-pack.log
 worker/
 node_modules/
 .cargo-ok
+# dotenv environment variables file
+.env
+# distribution folder
+dist/
