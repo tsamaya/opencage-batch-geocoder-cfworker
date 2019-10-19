@@ -1,0 +1,18 @@
+<h1>OpenCage Geocoder</h1>
+<p>Enter an address:</p>
+<input type="text" id="address" value="Brandenburg Gate"></input>
+<button onclick='geocode()'>Geocode</button>
+<pre id="response"></pre>
+
+<script>
+  async function geocode() {
+    const response = await fetch(window.location.pathname, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ q: document.querySelector("#address").value })
+    });
+    const data = await response.json();
+    console.log(data);
+    document.querySelector("#response").innerHTML = JSON.stringify(data, null, '  ')
+  }
+</script>
