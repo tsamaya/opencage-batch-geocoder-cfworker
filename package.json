@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "opencage-batch-geocoder-cfworkers",
+  "name": "opencage-batch-geocoder-cfworker",
   "version": "1.0.0",
   "description": "A template for kick starting a Cloudflare Workers project",
   "main": "index.js",

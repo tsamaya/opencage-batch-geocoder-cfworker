@@ -1,5 +1,5 @@
 account_id = ""
-name = "opencage-batch-geocoder-cfworkers"
+name = "opencage-batch-geocoder-cfworker"
 type = "webpack"
 route = ""
 workers_dev = true
