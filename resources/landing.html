@@ -68,15 +68,15 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             q: document.querySelector('#query').value,
-            key: document.querySelector('#key').value,
-          }),
+            key: document.querySelector('#key').value
+          })
         });
         const data = await response.json();
         console.log(data);
         document.querySelector('#response').innerHTML = JSON.stringify(
           data,
           null,
-          '  ',
+          '  '
         );
       }
       async function map_geocode() {
@@ -88,16 +88,12 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             q: document.querySelector('#query').value,
-            key: document.querySelector('#key').value,
-          }),
+            key: document.querySelector('#key').value
+          })
         });
         const data = await response.text();
         console.log(data);
-        document.querySelector('#response').innerHTML = JSON.stringify(
-          data,
-          null,
-          '  ',
-        );
+        document.querySelector('#response').innerHTML = data;
       }
     </script>
   </body>
