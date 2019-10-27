@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Opencage data batch geocoder map</title>
+    <title>Opencage Data Batch Geocoder map</title>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,21 +34,91 @@
       var map = L.map('map').setView([51.505, -0.09], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
-      var group = L.layerGroup().addTo(map);
-      var arr = [
-        [48.8566969, 2.3514616],
-        [51.5073219, -0.1276474],
-        [45.4667971, 9.1904984],
-        [45.2092471, 5.7811983],
-        [45.7578137, 4.8320114],
-        [52.5069348, 13.3974827],
+      var myLayer = L.geoJSON(null, {
+        onEachFeature: function(f, l) {
+          l.bindPopup(
+            '<pre>' +
+              JSON.stringify(f.properties, null, ' ').replace(/[\{\}"]/g, '') +
+              '</pre>'
+          );
+        }
+      }).addTo(map);
+
+      var geojsonFeatures = [
+        {
+          type: 'Feature',
+          properties: {
+            formatted: 'The Art, City Hall Plaza, 75004 Paris, France',
+            'ISO_3166-1_alpha-2': 'FR',
+            'ISO_3166-1_alpha-3': 'FRA',
+            _type: 'artwork',
+            artwork: 'The Art',
+            city: 'Paris',
+            city_district: '4th Arrondissement',
+            continent: 'Europe',
+            country: 'France',
+            country_code: 'fr',
+            county: 'Paris',
+            neighbourhood: 'Beaubourg',
+            pedestrian: 'City Hall Plaza',
+            political_union: 'European Union',
+            postcode: '75004',
+            state: 'Ile-de-France',
+            state_district: 'Paris',
+            suburb: 'St-Merri'
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [2.3514616, 48.8566969]
+          }
+        },
+        {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [-0.1276474, 51.5073219]
+          }
+        },
+        {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [9.1904984, 45.4667971]
+          }
+        },
+        {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [5.7811983, 45.2092471]
+          }
+        },
+        {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [4.8320114, 45.7578137]
+          }
+        },
+        {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: [13.3974827, 52.5069348]
+          }
+        }
       ];
-      for (var i = 0; i < arr.length; i++) {
-        group.addLayer(L.marker(arr[i]));
-      }
-      map.fitBounds(L.latLngBounds(arr));
+
+      myLayer.addData(geojsonFeatures);
+
+      map.fitBounds(myLayer.getBounds());
     </script>
   </body>
 </html>
