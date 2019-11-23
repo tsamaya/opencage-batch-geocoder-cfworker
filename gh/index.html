@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OpenCage batch Geocoder</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+    />
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title">
+          OpenCage Batch Geocoder
+        </h1>
+        <div class="columns">
+          <div class="column is-one-third">
+            <div class="field">
+              <label class="label">API Key</label>
+              <div class="control">
+                <input
+                  id="key"
+                  class="input"
+                  type="text"
+                  placeholder="API Key"
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">Addresses and coordinates</label>
+              <div class="control">
+                <textarea
+                  id="query"
+                  class="textarea"
+                  placeholder="Brandenburg Gate"
+                  rows="10"
+                ></textarea>
+              </div>
+            </div>
+            <div>
+              <button class="button is-primary" onclick="geocode()">
+                Batch Geocode => Json
+              </button>
+              <button class="button is-primary" onclick="map_geocode()">
+                Batch Geocode => Map
+              </button>
+            </div>
+          </div>
+
+          <div class="column is-two-thirds">
+            <pre id="response"></pre>
+            <div id="map"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script>
+      async function geocode() {
+        document.querySelector('#response').innerHTML = '';
+        // const response = await fetch(window.location.pathname, {
+        const response = await fetch(
+          'https://opencage-batch-geocoder-cfworker.tsamaya.workers.dev/',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              q: document.querySelector('#query').value,
+              key: document.querySelector('#key').value
+            })
+          }
+        );
+        const data = await response.json();
+        console.log(data);
+        document.querySelector('#response').innerHTML = JSON.stringify(
+          data,
+          null,
+          '  '
+        );
+      }
+      async function map_geocode() {
+        document.querySelector('#response').innerHTML = '';
+        // const url = window.location.pathname + 'geojson';
+        // const url =
+        //   'https://opencage-batch-geocoder-cfworker.tsamaya.workers.dev/geojson';
+        // console.log(url);
+        // const response = await fetch(url, {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     q: document.querySelector('#query').value,
+        //     key: document.querySelector('#key').value
+        //   })
+        // });
+        // const data = await response.text();
+        const data = [
+          {
+            type: 'Feature',
+            properties: {
+              formatted: 'Lyon, Chemin de Boissière, 69630 Chaponost, France',
+              'ISO_3166-1_alpha-2': 'FR',
+              'ISO_3166-1_alpha-3': 'FRA',
+              _type: 'road',
+              continent: 'Europe',
+              country: 'France',
+              country_code: 'fr',
+              county: 'Lyon',
+              political_union: 'European Union',
+              postcode: '69630',
+              road: 'Chemin de Boissière',
+              state: 'Auvergne-Rhône-Alpes',
+              state_code: 'ARA',
+              state_district: 'Departemental constituency of Rhône',
+              unknown: 'Lyon',
+              village: 'Chaponost'
+            },
+            geometry: { type: 'Point', coordinates: [4.735948, 45.6963425] }
+          },
+          {
+            type: 'Feature',
+            properties: {
+              formatted: 'Lyon, France',
+              'ISO_3166-1_alpha-2': 'FR',
+              'ISO_3166-1_alpha-3': 'FRA',
+              _type: 'city',
+              city: 'Lyon',
+              continent: 'Europe',
+              country: 'France',
+              country_code: 'fr',
+              county: 'Lyon',
+              political_union: 'European Union',
+              state: 'Auvergne-Rhône-Alpes',
+              state_code: 'ARA',
+              state_district: 'Departemental constituency of Rhône'
+            },
+            geometry: { type: 'Point', coordinates: [4.8320114, 45.7578137] }
+          },
+          {
+            type: 'Feature',
+            properties: {
+              formatted: 'Lyon County, KS, United States of America',
+              'ISO_3166-1_alpha-2': 'US',
+              'ISO_3166-1_alpha-3': 'USA',
+              _type: 'county',
+              continent: 'North America',
+              country: 'USA',
+              country_code: 'us',
+              county: 'Lyon County',
+              state: 'Kansas',
+              state_code: 'KS'
+            },
+            geometry: { type: 'Point', coordinates: [-96.1683124, 38.4573987] }
+          },
+          {
+            type: 'Feature',
+            properties: {
+              formatted: 'Lyon County, MN, United States of America',
+              'ISO_3166-1_alpha-2': 'US',
+              'ISO_3166-1_alpha-3': 'USA',
+              _type: 'county',
+              continent: 'North America',
+              country: 'USA',
+              country_code: 'us',
+              county: 'Lyon County',
+              state: 'Minnesota',
+              state_code: 'MN'
+            },
+            geometry: { type: 'Point', coordinates: [-95.8287296, 44.3880733] }
+          },
+          {
+            type: 'Feature',
+            properties: {
+              formatted: 'Lyon County, KY, United States of America',
+              'ISO_3166-1_alpha-2': 'US',
+              'ISO_3166-1_alpha-3': 'USA',
+              _type: 'county',
+              continent: 'North America',
+              country: 'USA',
+              country_code: 'us',
+              county: 'Lyon County',
+              state: 'Kentucky',
+              state_code: 'KY'
+            },
+            geometry: { type: 'Point', coordinates: [-88.0658149, 36.9981232] }
+          },
+          {
+            type: 'Feature',
+            properties: {
+              formatted: 'Lyon County, IA, United States of America',
+              'ISO_3166-1_alpha-2': 'US',
+              'ISO_3166-1_alpha-3': 'USA',
+              _type: 'county',
+              continent: 'North America',
+              country: 'USA',
+              country_code: 'us',
+              county: 'Lyon County',
+              state: 'Iowa',
+              state_code: 'IA'
+            },
+            geometry: { type: 'Point', coordinates: [-96.2081917, 43.3747071] }
+          },
+          {
+            type: 'Feature',
+            properties: {
+              formatted: 'Lyon County, NV, United States of America',
+              'ISO_3166-1_alpha-2': 'US',
+              'ISO_3166-1_alpha-3': 'USA',
+              _type: 'county',
+              continent: 'North America',
+              country: 'USA',
+              country_code: 'us',
+              county: 'Lyon County',
+              state: 'Nevada',
+              state_code: 'NV'
+            },
+            geometry: { type: 'Point', coordinates: [-119.1822042, 38.9887898] }
+          },
+          {
+            type: 'Feature',
+            properties: {
+              formatted: 'Lyon, France',
+              'ISO_3166-1_alpha-2': 'FR',
+              'ISO_3166-1_alpha-3': 'FRA',
+              _type: 'county',
+              continent: 'Europe',
+              country: 'France',
+              country_code: 'fr',
+              county: 'Lyon',
+              political_union: 'European Union',
+              state: 'Auvergne-Rhône-Alpes',
+              state_code: 'ARA',
+              state_district: 'Departemental constituency of Rhône'
+            },
+            geometry: { type: 'Point', coordinates: [4.735948, 45.6963425] }
+          },
+          {
+            type: 'Feature',
+            properties: {
+              formatted: 'Lyon, MO, United States of America',
+              'ISO_3166-1_alpha-2': 'US',
+              'ISO_3166-1_alpha-3': 'USA',
+              _type: 'village',
+              continent: 'North America',
+              country: 'USA',
+              country_code: 'us',
+              county: 'Franklin County',
+              hamlet: 'Lyon',
+              state: 'Missouri',
+              state_code: 'MO'
+            },
+            geometry: { type: 'Point', coordinates: [-91.1740394, 38.5117175] }
+          },
+          {
+            type: 'Feature',
+            properties: {
+              formatted: 'Lyon, MS, United States of America',
+              'ISO_3166-1_alpha-2': 'US',
+              'ISO_3166-1_alpha-3': 'USA',
+              _type: 'city',
+              city: 'Lyon',
+              continent: 'North America',
+              country: 'USA',
+              country_code: 'us',
+              county: 'Coahoma County',
+              state: 'Mississippi',
+              state_code: 'MS'
+            },
+            geometry: { type: 'Point', coordinates: [-90.5420429, 34.2178865] }
+          }
+        ];
+        console.log(data);
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        var myLayer = L.geoJSON(null, {
+          onEachFeature: function(f, l) {
+            l.bindPopup(
+              '<pre>' +
+                JSON.stringify(f.properties, null, ' ').replace(
+                  /[\\{\\}"]/g,
+                  ''
+                ) +
+                '</pre>'
+            );
+          }
+        }).addTo(map);
+
+        var geojsonFeatures = data;
+        myLayer.addData(geojsonFeatures);
+
+        map.fitBounds(myLayer.getBounds());
+      }
+    </script>
+    <script></script>
+  </body>
+</html>
